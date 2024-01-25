@@ -25,4 +25,4 @@ def chat_with_mistral(message, history):
         return "Error: Unable to get response from Mistral API"
 
 chat_interface = gr.ChatInterface(fn=chat_with_mistral, title="Mistral Chatbot")
-chat_interface.launch()
+chat_interface.launch(server_name='0.0.0.0')

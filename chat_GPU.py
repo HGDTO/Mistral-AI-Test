@@ -3,7 +3,6 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from transformers import pipeline
 
-pipe = pipeline("text-generation", model="mistralai/Mistral-7B-v0.1")
 # Load model directly
 tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
 model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1")
@@ -12,6 +11,11 @@ model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1")
 # GPU 사용 설정 (가능한 경우)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
+pipe = pipeline(
+    "text-generation",
+    model="mistralai/Mistral-7B-v0.1",
+    model_kwargs={"torch_dtype": torch.float16, "load_in_4bit": True},
+)
 
 # 챗봇 기능을 수행하는 함수
 def chat_with_mistral(user_input):
